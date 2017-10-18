@@ -60,11 +60,20 @@ describe('Server', () => {
       this.request.get('/api/v1/foods/1', (error, response) => {
         if (error) { return done(error) }
         const getsOneFood = JSON.parse(response.body);
-        assert.equal(getsOneFood[0], 1);
-        assert.hasAllKeys( getsOneFood[0], ['id', 'name', 'calories'])
+        assert.equal(getsOneFood[0].id, 1);
+        assert.hasAllKeys( getsOneFood[0], ['id', 'name', 'calories']);
         assert.equal(getsOneFood.length, 1);
         done()
       })
-    } )
+    });
+
+    it('should return status code 200', done => {
+      this.request.get('/api/v1/foods/1', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 200);
+        done()
+      })
+    })
+
   })
 });

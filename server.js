@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const FoodController = require('./lib/controllers/foods-controller');
 const Food = require('./lib/models/food');
 const Meal = require('./lib/models/meal');
-const Meals = require('./lib/controllers/meals-controller');
+const MealController = require('./lib/controllers/meals-controller');
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -25,6 +25,10 @@ app.set('port', process.env.PORT || 3000);
 
 app.get('/api/v1/foods', (request, response) => {
   FoodController.all(response)
+});
+
+app.get('/api/v1/foods/:id', (request, response) => {
+  FoodController.oneFood(request, response)
 });
 
 app.listen(app.get('port'));
