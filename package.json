@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Quantified Self API",
   "main": "index.js",
+  "engines": {
+    "node": "8.7.0",
+    "npm": "5.4.2"
+  },
   "scripts": {
     "test": "NODE_ENV=test mocha test/*-test.js",
     "start": "nodemon server.js",
