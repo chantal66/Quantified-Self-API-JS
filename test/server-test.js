@@ -21,10 +21,10 @@ describe('Server', () => {
     })
   });
 
-  // beforeEach(done => {
-  //   database.seed.run()
-  //     .then( () => done())
-  // });
+  beforeEach(done => {
+    database.seed.run()
+      .then( () => done())
+  });
 
   after(() => {
     this.server.close()
