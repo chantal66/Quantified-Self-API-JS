@@ -5,9 +5,9 @@ module.exports = {
     migrations: {
       directory: './db/migrations'
     },
-    // seeds: {
-    //   directory: './db/seeds/dev'
-    // },
+    seeds: {
+      directory: './db/seeds/dev'
+    },
     useNullAsDefault: true
   },
 
@@ -17,9 +17,9 @@ module.exports = {
     migrations: {
       directory: './db/migrations'
     },
-    // seeds: {
-    //   directory: './db/seeds/test'
-    // },
+    seeds: {
+      directory: './db/seeds/test'
+    },
     useNullAsDefault: true
   },
 
@@ -29,9 +29,9 @@ module.exports = {
     migrations: {
       directory: './db/migrations'
     },
-    // seeds: {
-    //   directory: './db/seeds/production'
-    // },
+    seeds: {
+      directory: './db/seeds/production'
+    },
     useNullAsDefault: true
   }
 }
