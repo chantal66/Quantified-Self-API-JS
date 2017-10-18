@@ -1,3 +1,4 @@
+let pry = require('pryjs');
 const assert = require('chai').assert;
 const app = require('../server');
 const request = require('request');
@@ -21,10 +22,10 @@ describe('Server', () => {
     })
   });
 
-  // beforeEach(done => {
-  //   database.seed.run()
-  //     .then( () => done())
-  // });
+  beforeEach(done => {
+    database.seed.run()
+      .then( () => done())
+  });
 
   after(() => {
     this.server.close()
@@ -39,6 +40,17 @@ describe('Server', () => {
       this.request.get('/api/v1/foods', (error, response) => {
         if (error) { return done(error)}
         assert.equal(response.statusCode, 200);
+        done()
+      })
+    });
+
+    it('should return a list foods with names and calories', done => {
+      this.request.get('/api/v1/foods', (error, response) => {
+        if (error) { return done(error) }
+        const getsAllFoods = JSON.parse(response.body);
+        // eval(pry.it);
+        assert.hasAllKeys( getsAllFoods[0], ['id', 'name', 'calories']);
+        assert.equal(getsAllFoods.length, 8);
         done()
       })
     })
