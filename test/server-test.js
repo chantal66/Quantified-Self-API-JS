@@ -48,11 +48,23 @@ describe('Server', () => {
       this.request.get('/api/v1/foods', (error, response) => {
         if (error) { return done(error) }
         const getsAllFoods = JSON.parse(response.body);
-        // eval(pry.it);
         assert.hasAllKeys( getsAllFoods[0], ['id', 'name', 'calories']);
         assert.equal(getsAllFoods.length, 8);
         done()
       })
     })
+  });
+
+  describe('GET /api/v1/foods/:id', () => {
+    it('should return food according to the id', done => {
+      this.request.get('/api/v1/foods/1', (error, response) => {
+        if (error) { return done(error) }
+        const getsOneFood = JSON.parse(response.body);
+        assert.equal(getsOneFood[0], 1);
+        assert.hasAllKeys( getsOneFood[0], ['id', 'name', 'calories'])
+        assert.equal(getsOneFood.length, 1);
+        done()
+      })
+    } )
   })
 });
