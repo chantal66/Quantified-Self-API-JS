@@ -57,10 +57,10 @@ describe('Server', () => {
 
   describe('GET /api/v1/foods/:id', () => {
     it('should return food according to the id', done => {
-      this.request.get('/api/v1/foods/1', (error, response) => {
+      this.request.get('/api/v1/foods/7', (error, response) => {
         if (error) { return done(error) }
         const getsOneFood = JSON.parse(response.body);
-        assert.equal(getsOneFood[0].id, 1);
+        assert.equal(getsOneFood[0].id, 7);
         assert.hasAllKeys( getsOneFood[0], ['id', 'name', 'calories']);
         assert.equal(getsOneFood.length, 1);
         done()
@@ -68,12 +68,19 @@ describe('Server', () => {
     });
 
     it('should return status code 200', done => {
-      this.request.get('/api/v1/foods/1', (error, response) => {
+      this.request.get('/api/v1/foods/7', (error, response) => {
         if (error) { return done(error) }
         assert.equal(response.statusCode, 200);
         done()
       })
-    })
+    });
 
+    it('should return a status 404 if not found', done => {
+      this.request.get('/api/v1/foods/100', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 404);
+        done()
+      })
+    })
   })
 });
