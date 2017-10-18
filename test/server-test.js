@@ -30,9 +30,9 @@ describe('Server', () => {
     this.server.close()
   });
 
-  // it('exists', () => {
-  //   assert(app.locals)
-  // });
+  it('exists', () => {
+    assert(app.locals)
+  });
 
   describe('GET /api/v1/foods', () => {
     it('should return status code 200', done => {
