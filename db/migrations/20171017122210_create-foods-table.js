@@ -12,6 +12,6 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
   let dropQuery = `
     DROP TABLE foods;
-  `
+  `;
   return knex.raw(dropQuery);
 };
