@@ -1,3 +1,4 @@
+let pry = require('pryjs');
 const assert = require('chai').assert;
 const app = require('../server');
 const request = require('request');
@@ -30,15 +31,54 @@ describe('Server', () => {
     this.server.close()
   });
 
-  // it('exists', () => {
-  //   assert(app.locals)
-  // });
+  it('exists', () => {
+    assert(app.locals)
+  });
 
   describe('GET /api/v1/foods', () => {
     it('should return status code 200', done => {
       this.request.get('/api/v1/foods', (error, response) => {
         if (error) { return done(error)}
         assert.equal(response.statusCode, 200);
+        done()
+      })
+    });
+
+    it('should return a list foods with names and calories', done => {
+      this.request.get('/api/v1/foods', (error, response) => {
+        if (error) { return done(error) }
+        const getsAllFoods = JSON.parse(response.body);
+        assert.hasAllKeys( getsAllFoods[0], ['id', 'name', 'calories']);
+        assert.equal(getsAllFoods.length, 8);
+        done()
+      })
+    })
+  });
+
+  describe('GET /api/v1/foods/:id', () => {
+    it('should return food according to the id', done => {
+      this.request.get('/api/v1/foods/7', (error, response) => {
+        if (error) { return done(error) }
+        const getsOneFood = JSON.parse(response.body);
+        assert.equal(getsOneFood[0].id, 7);
+        assert.hasAllKeys( getsOneFood[0], ['id', 'name', 'calories']);
+        assert.equal(getsOneFood.length, 1);
+        done()
+      })
+    });
+
+    it('should return status code 200', done => {
+      this.request.get('/api/v1/foods/7', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 200);
+        done()
+      })
+    });
+
+    it('should return a status 404 if not found', done => {
+      this.request.get('/api/v1/foods/100', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 404);
         done()
       })
     })
