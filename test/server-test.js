@@ -109,7 +109,9 @@ describe('Server', () => {
         const meals = JSON.parse(response.body);
         const oneMeal = meals[0];
 
-        assert.hasAllKeys(oneMeal, ['id', 'name', 'foods']);
+        assert.equal(meals.length, 4);
+        assert.hasAllKeys(oneMeal, ["id", "name", "foods"]);
+        assert.hasAllKeys(oneMeal["foods"][0], ["id", "name", "calories"]);
         done()
       })
     })
