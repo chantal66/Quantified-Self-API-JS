@@ -104,10 +104,8 @@ describe('Server', () => {
 
   describe('POST /api/v1/foods', () => {
     beforeEach( done => {
-      database.raw(
-        'INSERT INTO foods (name, calories) VALUES (?, ?)',
-        ["Ham Sandwich", 200]
-      ).then(() => done())
+      database.raw('TRUNCATE foods RESTART IDENTITY')
+      .then(() => done())
     })
 
     afterEach( done => {
