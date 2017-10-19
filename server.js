@@ -35,6 +35,10 @@ app.delete('/api/v1/foods/:id', (request, response) => {
  FoodController.deleteFood(request, response)
 });
 
+app.get('api/v1/meals', (request, response) => {
+  MealController.getMeals(request, response)
+});
+
 app.listen(app.get('port'));
 
 module.exports = app;
