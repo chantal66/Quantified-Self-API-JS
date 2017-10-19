@@ -82,5 +82,38 @@ describe('Server', () => {
         done()
       })
     })
+  });
+
+  describe('DELETE /api/v1/foods/:id', () => {
+    it('should return a 200 if successfully deletes a food', done => {
+      this.request.delete('/api/v1/foods/7', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 200);
+        done()
+      })
+    });
+
+    it('returns a 404 if it food not found', done => {
+      this.request.delete('/api/v1/foods/20', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 404);
+        done()
+      })
+    })
+  });
+
+  describe('GET /api/v1/meals', () => {
+    it('returns the meals associated with foods', done => {
+      this.request.get('/api/v1/meals', (error, response) => {
+        if (error) { return done(error) }
+        const meals = JSON.parse(response.body);
+        const oneMeal = meals[0];
+
+        assert.equal(meals.length, 4);
+        assert.hasAllKeys(oneMeal, ["id", "name", "foods"]);
+        assert.hasAllKeys(oneMeal["foods"][0], ["id", "name", "calories"]);
+        done()
+      })
+    })
   })
 });
