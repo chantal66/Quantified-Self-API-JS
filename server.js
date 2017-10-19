@@ -31,6 +31,10 @@ app.post('/api/v1/foods', (request, response) => {
   FoodController.postFood(request, response)
 });
 
+app.put('/api/v1/foods/:id', (request, response) => {
+  FoodController.patchFood(request, response)
+})
+
 app.delete('/api/v1/foods/:id', (request, response) => {
  FoodController.deleteFood(request, response)
 });

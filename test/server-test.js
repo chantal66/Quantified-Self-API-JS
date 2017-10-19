@@ -169,8 +169,7 @@ describe('Server', () => {
   describe('PATCH /api/v1/foods/:id', () => {
     beforeEach( done => {
       database.raw(`
-        TRUNCATE foods RESTART IDENTITY;
-        INSERT INTO foods (id, name, calories)
+        INSERT INTO foods (name, calories)
         VALUES (?, ?);
       `, ["Ham Sandwich", 200])
       .then(() => done())
@@ -197,7 +196,8 @@ describe('Server', () => {
       const emptyUpdatedFood = { food: { name: '', calories: '' } };
       this.request.put('/api/v1/foods/1', { form: emptyUpdatedFood }, function(error, response) {
         if (error) { return done(error) }
-        assert.equal(400, response.statusCode);
+        assert.equal(400, response.statusCode)
+        done()
       })
     })
   });
