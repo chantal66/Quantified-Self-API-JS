@@ -85,6 +85,18 @@ describe('Server', () => {
   })
 
   describe('POST /api/v1/foods', () => {
+    beforeEach( done => {
+      database.raw(
+        'INSERT INTO foods (name, calories) VALUES (?, ?)',
+        ["Ham Sandwich", 200]
+      ).then(() => done())
+    })
+
+    afterEach( done => {
+      database.raw('TRUNCATE foods RESTART IDENTITY')
+      .then(() => done())
+    })
+
     it('should receive and store data', done => {
       const food = { food:
         { name: "Pumpkin Pie",
@@ -92,38 +104,28 @@ describe('Server', () => {
         }
       };
 
-      const initialCount = Food.all().length;
+      Food.all().then((foods) => {
+        const initialCount = foods.rows.length;
+        this.request.post('/api/v1/foods', { form: food }, function(error, response) {
+          if (error) { done(error) }
+          var parsedFood = JSON.parse(response.body)
+          assert.equal(response.statusCode, 200)
+          assert.equal("Pumpkin Pie", parsedFood.name)
+          assert.equal(100, parsedFood.calories)
 
-      this.request.post('/api/v1/foods', { form: food }, function(error, response) {
-        if (error) { done(error) }
-        var parsedFood = JSON.parse(response.body)
-        assert.equal(response.statusCode, 200)
-        assert.equal("Pumpkin Pie", parsedFood.name)
-        assert.equal(100, parsedFood.calories)
-
-        const afterCount = Food.all().length;
-
-        assert.equal(1, afterCount - initialCount);
-        done();
-      })
-    })
-
-    it('should return a status 404 if the endpoint does not exist', done => {
-      const food = { food:
-        { name: "Pumpkin Pie",
-          calories: 100
-        }
-      };
-
-      this.request.post('/api/v1/foooods', { form: food }, function(error, response) {
-        if (error) { return done(error) }
-        assert.equal(response.statusCode, 404);
+          Food.all().then((foods) => {
+            const afterCount = foods.rows.length;
+            assert.equal(1, afterCount - initialCount);
+            done();
+          })
+        })
       })
     })
 
     it('should return a status 404 if the POST data is structured incorrectly', done => {
       const noNameFood = { food:
-        { name: "",
+        {
+          name: '',
           calories: 100
         }
       };
@@ -134,8 +136,9 @@ describe('Server', () => {
       })
 
       const noCaloriesFood = { food:
-        { name: "Banana",
-          calories: ""
+        {
+          name: 'Banana',
+          calories: ''
         }
       };
 

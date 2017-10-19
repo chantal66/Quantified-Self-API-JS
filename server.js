@@ -31,6 +31,10 @@ app.get('/api/v1/foods/:id', (request, response) => {
   FoodController.oneFood(request, response)
 });
 
+app.post('/api/v1/foods', (request, response) => {
+  FoodController.postFood(request, response)
+})
+
 app.listen(app.get('port'));
 
 module.exports = app;
