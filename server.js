@@ -27,6 +27,10 @@ app.get('/api/v1/foods/:id', (request, response) => {
   FoodController.oneFood(request, response)
 });
 
+app.get('/api/v1/meals/:meal_id/foods', (request, response) => {
+  MealController.getMealFoods(request, response);
+})
+
 app.post('/api/v1/foods', (request, response) => {
   FoodController.postFood(request, response)
 });
@@ -38,7 +42,8 @@ app.put('/api/v1/foods/:id', (request, response) => {
 app.delete('/api/v1/foods/:id', (request, response) => {
  FoodController.deleteFood(request, response)
 });
-
+console.log('listening on port ')
+console.log(app.get('port'))
 app.listen(app.get('port'));
 
 module.exports = app;
