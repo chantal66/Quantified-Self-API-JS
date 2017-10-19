@@ -82,6 +82,24 @@ describe('Server', () => {
         done()
       })
     })
+  });
+
+  describe('DELETE /api/v1/foods/:id', () => {
+    it('should return a 200 if successfully deletes a food', done => {
+      this.request.delete('/api/v1/foods/7', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 200);
+        done()
+      })
+    });
+
+    it('returns a 404 if it food not found', done => {
+      this.request.delete('/api/v1/foods/20', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 404);
+        done()
+      })
+    })
   })
 
   describe('POST /api/v1/foods', () => {
