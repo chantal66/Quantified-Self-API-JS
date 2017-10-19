@@ -116,4 +116,68 @@ describe('Server', () => {
       })
     })
   })
+
+  describe('POST /api/v1/foods', () => {
+    beforeEach( done => {
+      database.raw('TRUNCATE foods RESTART IDENTITY')
+      .then(() => done())
+    })
+
+    afterEach( done => {
+      database.raw('TRUNCATE foods RESTART IDENTITY')
+      .then(() => done())
+    })
+
+    it('should receive and store data', done => {
+      const food = { food:
+        { name: "Pumpkin Pie",
+          calories: 100
+        }
+      };
+
+      Food.all().then((foods) => {
+        const initialCount = foods.rows.length;
+        this.request.post('/api/v1/foods', { form: food }, function(error, response) {
+          if (error) { done(error) }
+          var parsedFood = JSON.parse(response.body)
+          assert.equal(response.statusCode, 200)
+          assert.equal("Pumpkin Pie", parsedFood.name)
+          assert.equal(100, parsedFood.calories)
+
+          Food.all().then((foods) => {
+            const afterCount = foods.rows.length;
+            assert.equal(1, afterCount - initialCount);
+            done();
+          })
+        })
+      })
+    })
+
+    it('should return a status 404 if the POST data is structured incorrectly', done => {
+      const noNameFood = { food:
+        {
+          name: '',
+          calories: 100
+        }
+      };
+
+      this.request.post('/api/v1/foods', { form: noNameFood }, function(error, response) {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 404);
+      })
+
+      const noCaloriesFood = { food:
+        {
+          name: 'Banana',
+          calories: ''
+        }
+      };
+
+      this.request.post('/api/v1/foods', { form: noCaloriesFood }, function(error, response) {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 404);
+      })
+      done();
+    });
+  });
 });
