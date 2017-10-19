@@ -84,6 +84,27 @@ describe('Server', () => {
     })
   });
 
+  describe('GET /api/v1/meals/:meal_id/foods', () => {
+    it('should return foods belonging to a certain meal', done => {
+      this.request.get('/api/v1/meals/1/foods', (error, response) => {
+        if (error) { return done(error) }
+        const mealFoods = JSON.parse(response.body);
+        assert.equal(response.statusCode, 200);
+        assert.hasAllKeys( mealFoods[0], ['id', 'name', 'calories'] );
+        done()
+      })
+    });
+
+
+    it('should return a status 404 if not found', done => {
+      this.request.get('/api/v1/meals/0/foods', (error, response) => {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 404);
+        done()
+      })
+    })
+  });
+
   describe('DELETE /api/v1/foods/:id', () => {
     it('should return a 200 if successfully deletes a food', done => {
       this.request.delete('/api/v1/foods/7', (error, response) => {
