@@ -20,7 +20,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.set('port', process.env.PORT || 3000);
 
 app.get('/api/v1/foods', (request, response) => {
@@ -35,8 +34,8 @@ app.delete('/api/v1/foods/:id', (request, response) => {
  FoodController.deleteFood(request, response)
 });
 
-app.get('api/v1/meals', (request, response) => {
-  MealController.getMeals(request, response)
+app.get('/api/v1/meals', (request, response) => {
+  MealController.index(request, response)
 });
 
 app.listen(app.get('port'));

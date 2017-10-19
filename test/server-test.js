@@ -104,11 +104,13 @@ describe('Server', () => {
 
   describe('GET /api/v1/meals', () => {
     it('returns the meals associated with foods', done => {
-      this.request.get('api/v1/meals', (error, response) => {
+      this.request.get('/api/v1/meals', (error, response) => {
         if (error) { return done(error) }
         const meals = JSON.parse(response.body);
         const oneMeal = meals[0];
-        assert.hasAllKeys(oneMeal, ['id', 'name', 'foods'])
+
+        assert.hasAllKeys(oneMeal, ['id', 'name', 'foods']);
+        done()
       })
     })
   })
