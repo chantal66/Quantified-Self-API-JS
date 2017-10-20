@@ -139,15 +139,15 @@ describe('Server', () => {
   });
 
   describe('DELETE /api/v1/meals/:meal_id/foods/:food_id', () => {
-    xit('should return a 200 if successfully deletes a food', done => {
-      this.request.delete('/api/v1/meals/1/foods/2', (error, response) => {
+    it('should return a 200 if successfully deletes a food', done => {
+      this.request.delete('/api/v1/meals/1/foods/3', (error, response) => {
         if (error) { return done(error) }
         assert.equal(response.statusCode, 200);
         done()
       })
     });
 
-    xit('returns a 404 if it food not found', done => {
+    it('returns a 404 if it food not found', done => {
       this.request.delete('/api/v1/meals/5/foods/30', (error, response) => {
         if (error) { return done(error) }
         assert.equal(response.statusCode, 404);
