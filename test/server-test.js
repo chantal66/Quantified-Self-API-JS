@@ -220,6 +220,36 @@ describe('Server', () => {
     });
   });
 
+  describe('POST /api/v1/meals/:meal_id/foods/:id', () => {
+    beforeEach( done => {
+      database.raw('TRUNCATE meal_foods RESTART IDENTITY')
+      .then(() => {
+        database.raw('INSERT INTO meals (id, name) VALUES (?, ?)', [1, 'Breakfast'])
+      })
+      .then(() => {
+        database.raw('INSERT INTO foods (id, name, calories) VALUES (?, ?, ?)', [1, 'Pancakes', 200])
+      })
+      .then(() => done())
+    })
+
+    afterEach( done => {
+      database.raw('TRUNCATE meal_foods RESTART IDENTITY')
+      .then(() => done())
+    })
+    it('should receive and store data representing a meal-food relationship', done => {
+      const mealId = 1;
+      const foodId = 1;
+      this.request.post(`/api/v1/meals/${mealId}/foods/${foodId}`, function(error, response) {
+        if (error) { return done(error) }
+        assert.equal(response.statusCode, 200);
+        const parsedMealFood = JSON.parse(response.body);
+        assert.equal(mealId, parsedMealFood.meal_id);
+        assert.equal(foodId, parsedMealFood.food_id);
+        done()
+      })
+    });
+  });
+
   describe('PATCH /api/v1/foods/:id', () => {
     beforeEach( done => {
       database.raw(`
