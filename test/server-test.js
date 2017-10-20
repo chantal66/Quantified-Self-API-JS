@@ -248,6 +248,14 @@ describe('Server', () => {
         done()
       })
     });
+
+    it('should respond with a status 404 if the relationship cannot be found', done => {
+      this.request.post(`/api/v1/meals/42/foods/10000`, function(error, response) {
+        if(error) { return done(error) }
+        assert.equal(response.statusCode, 404);
+        done()
+      })
+    })
   });
 
   describe('PATCH /api/v1/foods/:id', () => {
