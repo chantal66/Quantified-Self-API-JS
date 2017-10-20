@@ -237,6 +237,7 @@ describe('Server', () => {
       .then(() => done())
     })
     it('should receive and store data representing a meal-food relationship', done => {
+      // these ids correspond to the ids inserted into the database in the beforeEach callback
       const mealId = 1;
       const foodId = 1;
       this.request.post(`/api/v1/meals/${mealId}/foods/${foodId}`, function(error, response) {
@@ -250,7 +251,8 @@ describe('Server', () => {
     });
 
     it('should respond with a status 404 if the relationship cannot be found', done => {
-      this.request.post(`/api/v1/meals/42/foods/10000`, function(error, response) {
+      // the ids in this URL do not correspond to any ids in the database
+      this.request.post(`/api/v1/meals/42/foods/1000000`, function(error, response) {
         if(error) { return done(error) }
         assert.equal(response.statusCode, 404);
         done()
