@@ -30,35 +30,39 @@ app.get('/', (request, response) => {
 });
 
 app.get('/api/v1/foods', (request, response) => {
-  FoodController.all(response)
+  FoodController.all(response);
 });
 
 app.get('/api/v1/foods/:id', (request, response) => {
-  FoodController.oneFood(request, response)
+  FoodController.oneFood(request, response);
 });
 
 app.get('/api/v1/meals/:meal_id/foods', (request, response) => {
   MealController.getMealFoods(request, response);
-})
+});
 
 app.post('/api/v1/foods', (request, response) => {
-  FoodController.postFood(request, response)
+  FoodController.postFood(request, response);
+});
+
+app.post('/api/v1/meals/:meal_id/foods/:food_id', (request, response) => {
+  MealController.postMealFood(request, response);
 });
 
 app.put('/api/v1/foods/:id', (request, response) => {
-  FoodController.patchFood(request, response)
-})
+  FoodController.patchFood(request, response);
+});
 
 app.delete('/api/v1/foods/:id', (request, response) => {
- FoodController.deleteFood(request, response)
+ FoodController.deleteFood(request, response);
 });
 
 app.get('/api/v1/meals', (request, response) => {
-  MealController.index(request, response)
+  MealController.index(request, response);
 });
 
 app.delete('/api/v1/meals/:meal_id/foods/:food_id', (request, response)=> {
-  MealController.deleteFood(request, response)
+  MealController.deleteFood(request, response);
 });
 
 app.listen(app.get('port'));
