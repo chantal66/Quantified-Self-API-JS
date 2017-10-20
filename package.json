@@ -2,19 +2,25 @@
   "name": "quantified-self-api",
   "version": "1.0.0",
   "description": "Quantified Self API",
-  "main": "index.js",
+  "main": "server.js",
   "engines": {
     "node": "8.7.0",
     "npm": "5.4.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chantal66/Quantified-Self-API-JS.git "
+  },
+
   "scripts": {
     "test": "NODE_ENV=test mocha test/*-test.js",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "dev": "nodemon server.js",
     "debug": "NODE_ENV=test mocha debug test/*-test.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Chantal Justamond and Nick Edwards",
+  "license": "MIT",
+  "homepage": "https://github.com/chantal66/Quantified-Self-API-JS#readme" ,
   "dependencies": {
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",

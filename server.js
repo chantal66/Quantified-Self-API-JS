@@ -19,6 +19,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('port', process.env.PORT || 3000);
 
+app.use(express.static('public'));
+
+app.locals.title = 'Quantified Self';
+
+app.use("/styles", express.static(__dirname + '/styles'));
+
+app.get('/', (request, response) => {
+  response.sendFile('index.html', {root: './'})
+});
+
 app.get('/api/v1/foods', (request, response) => {
   FoodController.all(response)
 });
