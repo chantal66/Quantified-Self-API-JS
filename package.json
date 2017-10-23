@@ -11,7 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/chantal66/Quantified-Self-API-JS.git "
   },
-
   "scripts": {
     "test": "NODE_ENV=test mocha test/*-test.js",
     "start": "nodemon server.js",
@@ -20,14 +19,15 @@
   },
   "author": "Chantal Justamond and Nick Edwards",
   "license": "MIT",
-  "homepage": "https://github.com/chantal66/Quantified-Self-API-JS#readme" ,
+  "homepage": "https://github.com/chantal66/Quantified-Self-API-JS#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "knex": "^0.13.0",
     "pg": "^7.3.0",
-    "pryjs": "^1.0.3"
+    "pryjs": "^1.0.3",
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "@types/express": "^4.0.37",
